@@ -1,0 +1,58 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           Int       @id @default(autoincrement())
+  email        String    @unique
+  name         String
+  passwordHash String
+  createdAt    DateTime  @default(now())
+  favorites    Favorite[]
+  cartItems    CartItem[]
+}
+
+model Product {
+  id        Int        @id @default(autoincrement())
+  blingId   String     @unique
+  name      String
+  price     Float
+  imageUrl  String?
+  updatedAt DateTime   @default(now())
+  favorites Favorite[]
+  cartItems CartItem[]
+}
+
+model Favorite {
+  user       User     @relation(fields: [userId], references: [id])
+  userId     Int
+  product    Product  @relation(fields: [productId], references: [id])
+  productId  Int
+  favoritedAt DateTime @default(now())
+
+  @@id([userId, productId])
+}
+
+model CartItem {
+  id        Int      @id @default(autoincrement())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  product   Product  @relation(fields: [productId], references: [id])
+  productId Int
+  quantity  Int
+  addedAt   DateTime @default(now())
+}
+
+model BlingSyncLog {
+  id        Int      @id @default(autoincrement())
+  type      String
+  blingId   String?
+  status    String
+  message   String?
+  createdAt DateTime @default(now())
+}
