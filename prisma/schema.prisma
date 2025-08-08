@@ -8,12 +8,14 @@ datasource db {
 }
 
 model User {
-  id           Int       @id @default(autoincrement())
-  email        String    @unique
+  id           Int          @id @default(autoincrement())
+  email        String       @unique
   name         String
   passwordHash String
-  createdAt    DateTime  @default(now())
+  createdAt    DateTime     @default(now())
   favorites    Favorite[]
+
+  blingToken   BlingToken?
 }
 
 model Product {
@@ -27,11 +29,22 @@ model Product {
 }
 
 model Favorite {
-  user       User     @relation(fields: [userId], references: [id])
-  userId     Int
-  product    Product  @relation(fields: [productId], references: [id])
-  productId  Int
+  user        User     @relation(fields: [userId], references: [id])
+  userId      Int
+  product     Product  @relation(fields: [productId], references: [id])
+  productId   Int
   favoritedAt DateTime @default(now())
 
   @@id([userId, productId])
+}
+
+model BlingToken {
+  id            Int      @id @default(autoincrement())
+  accessToken   String
+  refreshToken  String?
+  expiresAt     DateTime?
+  user          User     @relation(fields: [userId], references: [id])
+  userId        Int      @unique
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 }

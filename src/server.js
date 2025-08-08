@@ -4,10 +4,11 @@ import cors from "cors";
 
 import userRoutes from "./routes/userRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
+import blingRoutes from "./routes/blingRoutes.js";
 
 dotenv.config();
-const app = express();
 
+const app = express();
 app.use(cors());
 app.use(express.json());
 
@@ -17,6 +18,7 @@ app.get("/", (req, res) => {
 
 app.use("/users", userRoutes);
 app.use("/auth", authRoutes);
+app.use("/bling", blingRoutes);
 
 const port = process.env.PORT || 3001;
 app.listen(port, () => {
