@@ -14,7 +14,11 @@ app.use(cors());
 app.use(express.json());
 
 const prisma = new PrismaClient();
-const redis = new Redis(process.env.REDIS_URL, { connectTimeout: 10000, maxRetriesPerRequest: 5 });
+const redis = new Redis(process.env.REDIS_URL || {
+  host: process.env.REDIS_HOST,
+  port: process.env.REDIS_PORT,
+  password: process.env.REDIS_PASSWORD
+});
 
 app.get("/", (req, res) => {
   res.send("API funcionando!");
