@@ -1,21 +1,17 @@
-import axios from "axios";
+// src/services/loggiService.js
+const loggiClient = require('../utils/loggiClient');
 
-const BLING_API_KEY = process.env.BLING_API_KEY; // configure sua API key no .env
-const BLING_BASE_URL = "https://bling.com.br/Api/v2";
-
-export async function getProductStock(sku) {
+async function calcularFrete(dadosFrete) {
   try {
-    const url = `${BLING_BASE_URL}/produto/json/?apikey=${BLING_API_KEY}&filters=code[${sku}]`;
-    const response = await axios.get(url);
-
-    if (response.data.retorno?.produtos?.length > 0) {
-      const produto = response.data.retorno.produtos[0].produto;
-      const estoque = produto.estoque;
-      return estoque;
-    }
-    return null;
+    // Ajuste o payload conforme a documentação da Loggi
+    const response = await loggiClient.post('/quote', dadosFrete);
+    return response.data;
   } catch (error) {
-    console.error("Erro ao consultar estoque no Bling:", error.message);
+    console.error('Erro ao calcular frete Loggi:', error.response?.data || error.message);
     throw error;
   }
 }
+
+module.exports = {
+  calcularFrete,
+};
