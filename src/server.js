@@ -20,7 +20,6 @@ app.use("/users", userRoutes);
 app.use("/auth", authRoutes);
 app.use("/bling", blingRoutes);
 
-const port = process.env.PORT || 3001;
 app.listen(port, () => {
   console.log(`Servidor rodando em http://localhost:${port}`);
 });
@@ -58,4 +57,5 @@ app.get("/health", async (req, res) => {
   }
 });
 
+const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Server running on port ${port}`));
