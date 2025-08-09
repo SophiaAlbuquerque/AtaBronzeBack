@@ -14,10 +14,11 @@ app.use(cors());
 app.use(express.json());
 
 const prisma = new PrismaClient();
-const redis = new Redis(process.env.REDIS_URL || {
-  host: process.env.REDIS_HOST,
-  port: process.env.REDIS_PORT,
-  password: process.env.REDIS_PASSWORD
+
+// Redis conectado apenas via URL (Railway)
+const redis = new Redis(process.env.REDIS_URL, {
+  connectTimeout: 10000,
+  maxRetriesPerRequest: null, // Evita o erro de "max retries"
 });
 
 app.get("/", (req, res) => {
@@ -28,6 +29,7 @@ app.use("/users", userRoutes);
 app.use("/auth", authRoutes);
 app.use("/bling", blingRoutes);
 
+// Endpoint de health check
 app.get("/health", async (req, res) => {
   try {
     await prisma.$queryRaw`SELECT 1`;
@@ -45,5 +47,5 @@ app.get("/health", async (req, res) => {
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
-  console.log(`Servidor rodando em http://localhost:${port}`);
+  console.log(`Servidor rodando na porta ${port}`);
 });
