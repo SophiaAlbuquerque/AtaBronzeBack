@@ -2,7 +2,7 @@ import Redis from "ioredis";
 
 const redis = new Redis(process.env.REDIS_URL, {
   connectTimeout: 10000,
-  maxRetriesPerRequest: null,
+  maxRetriesPerRequest: null
 });
 
 export async function storeState(state, userId) {
