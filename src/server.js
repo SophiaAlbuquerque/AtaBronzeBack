@@ -30,9 +30,7 @@ app.use("/bling", blingRoutes);
 
 app.get("/health", async (req, res) => {
   try {
-    // Teste Postgres
     await prisma.$queryRaw`SELECT 1`;
-    // Teste Redis
     const pong = await redis.ping();
     res.json({
       status: "ok",
