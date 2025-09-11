@@ -1,12 +1,15 @@
 import { ProductRepository } from '../repositories/ProductRepository';
 import { CreateProductInput, UpdateProductInput, Product } from '../types/product';
+import { BlingService } from './BlingService';
 import { logger } from '../config/logger';
 
 export class ProductService {
   private productRepository: ProductRepository;
+  private blingService: BlingService;
 
   constructor() {
     this.productRepository = new ProductRepository();
+    this.blingService = new BlingService();
   }
 
   async createProduct(data: CreateProductInput): Promise<Product> {
@@ -70,5 +73,69 @@ export class ProductService {
 
   async getProductByBlingId(blingId: string): Promise<Product | null> {
     return this.productRepository.findByBlingId(blingId);
+  }
+
+  async syncBlingProducts(): Promise<{ synced: number; errors: number; total: number }> {
+    try {
+      logger.info('Starting Bling products sync');
+      
+      // Get products from Bling
+      const blingProducts = await this.blingService.getProducts();
+      let synced = 0;
+      let errors = 0;
+
+      for (const blingProduct of blingProducts) {
+        try {
+          // Check if product already exists
+          const existingProduct = await this.productRepository.findByBlingId(blingProduct.id);
+          
+          if (existingProduct) {
+            // Update existing product
+            await this.productRepository.update(existingProduct.id, {
+              name: blingProduct.name,
+              description: blingProduct.description,
+              price: blingProduct.price,
+              stock: blingProduct.stock,
+            });
+            logger.debug('Updated product from Bling', { 
+              blingId: blingProduct.id, 
+              name: blingProduct.name 
+            });
+          } else {
+            // Create new product
+            await this.productRepository.create({
+              name: blingProduct.name,
+              description: blingProduct.description || '',
+              price: blingProduct.price,
+              stock: blingProduct.stock,
+              blingId: blingProduct.id,
+            });
+            logger.debug('Created product from Bling', { 
+              blingId: blingProduct.id, 
+              name: blingProduct.name 
+            });
+          }
+          
+          synced++;
+        } catch (error: any) {
+          logger.error('Error syncing individual product', { 
+            blingId: blingProduct.id, 
+            error: error.message 
+          });
+          errors++;
+        }
+      }
+
+      logger.info('Bling products sync completed', { 
+        total: blingProducts.length, 
+        synced, 
+        errors 
+      });
+
+      return { synced, errors, total: blingProducts.length };
+    } catch (error: any) {
+      logger.error('Error in Bling products sync', { error: error.message });
+      throw new Error('Falha na sincronização com Bling');
+    }
   }
 }

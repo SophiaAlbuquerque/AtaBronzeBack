@@ -4,6 +4,7 @@ import { productRoutes } from './productRoutes';
 import { orderRoutes } from './orderRoutes';
 import { paymentRoutes } from './paymentRoutes';
 import { shippingRoutes } from './shippingRoutes';
+import blingRoutes from './blingRoutes';
 
 const router = Router();
 
@@ -22,5 +23,6 @@ router.use('/products', productRoutes);
 router.use('/orders', orderRoutes);
 router.use('/payments', paymentRoutes);
 router.use('/shipping', shippingRoutes);
+router.use('/bling', blingRoutes);
 
 export { router as apiRoutes };

@@ -11,6 +11,7 @@ router.use(authenticateToken);
 router.post('/', productController.createProduct.bind(productController));
 router.get('/', productController.getProducts.bind(productController));
 router.get('/low-stock', productController.getLowStockProducts.bind(productController));
+router.post('/sync-bling', productController.syncBlingProducts.bind(productController));
 router.get('/:id', productController.getProductById.bind(productController));
 router.put('/:id', productController.updateProduct.bind(productController));
 router.patch('/:id/stock', productController.updateStock.bind(productController));

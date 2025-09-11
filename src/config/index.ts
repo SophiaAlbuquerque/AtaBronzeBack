@@ -14,6 +14,9 @@ export const config = {
     bling: {
       apiKey: process.env.BLING_API_KEY || '',
       baseUrl: process.env.BLING_API_URL || 'https://api.bling.com.br/Api/v3',
+      clientId: process.env.BLING_CLIENT_ID || '',
+      clientSecret: process.env.BLING_CLIENT_SECRET || '',
+      redirectUri: process.env.BLING_REDIRECT_URI || '',
     },
     asaas: {
       apiKey: process.env.ASAAS_API_KEY || '',

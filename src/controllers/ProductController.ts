@@ -122,4 +122,21 @@ export class ProductController {
       res.status(500).json({ error: 'Erro interno do servidor' });
     }
   }
+
+  async syncBlingProducts(req: Request, res: Response): Promise<void> {
+    try {
+      logger.info('Starting Bling products sync...');
+      const result = await this.productService.syncBlingProducts();
+      
+      res.json({
+        message: 'Sincronização com Bling concluída',
+        synced: result.synced,
+        errors: result.errors,
+        total: result.total
+      });
+    } catch (error: any) {
+      logger.error('Error syncing Bling products', { error: error.message });
+      res.status(500).json({ error: 'Erro ao sincronizar produtos do Bling' });
+    }
+  }
 }
