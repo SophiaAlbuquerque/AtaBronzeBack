@@ -1,6 +1,25 @@
 # Atabrinze API
 
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template/NvCE3W)
+
 Backend API para o sistema Atabrinze com integração a Bling, Correios e Asaas.
+
+## ⚡ Deploy Rápido no Railway
+
+**Deploy em 3 minutos:**
+
+1. **[Clique aqui para deploy automático](https://railway.app/new/template/NvCE3W)**
+2. **Conecte seu GitHub** e selecione este repositório
+3. **Railway adiciona PostgreSQL automaticamente**
+4. **Configure apenas as variáveis de ambiente:**
+   ```env
+   JWT_SECRET=your-super-secret-jwt-key
+   BLING_API_KEY=your-bling-api-key
+   ASAAS_API_KEY=your-asaas-api-key
+   ```
+5. **Deploy automático!** ✅
+
+> 💡 **DATABASE_URL** é configurada automaticamente pelo Railway
 
 ## 🚀 Tecnologias
 
