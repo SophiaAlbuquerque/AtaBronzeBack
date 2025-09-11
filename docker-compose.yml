@@ -23,15 +23,20 @@ services:
     environment:
       NODE_ENV: production
       PORT: 3000
-      DATABASE_URL: postgresql://atabrinze_user:atabrinze_password@postgres:5432/atabrinze_db?schema=public
-      JWT_SECRET: your-production-jwt-secret-key
+      DATABASE_URL: file:./data/prod.db
+      JWT_SECRET: production-secret-change-this-in-deployment
       JWT_EXPIRES_IN: 7d
+      BLING_API_KEY: your-bling-api-key
+      BLING_API_URL: https://api.bling.com.br/Api/v3
+      ASAAS_API_KEY: your-asaas-api-key
+      ASAAS_API_URL: https://api.asaas.com/v3
+      ASAAS_SANDBOX: "false"
+      CORREIOS_API_URL: https://cep.correios.com.br/api/v2
     ports:
       - "3000:3000"
-    depends_on:
-      - postgres
     volumes:
       - ./logs:/app/logs
+      - api_data:/app/data
     networks:
       - atabrinze-network
     restart: unless-stopped
@@ -51,6 +56,7 @@ services:
 volumes:
   postgres_data:
   redis_data:
+  api_data:
 
 networks:
   atabrinze-network:
