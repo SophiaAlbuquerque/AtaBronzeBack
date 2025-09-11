@@ -1,7 +1,7 @@
 @echo off
-REM Setup script for Atabrinze API (Windows)
+REM Setup script for AtaBronze API (Windows)
 
-echo 🚀 Setting up Atabrinze API...
+echo 🚀 Setting up AtaBronze API...
 
 REM Check if Node.js is installed
 node --version >nul 2>&1

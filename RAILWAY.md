@@ -1,4 +1,4 @@
-# 🚄 Railway Deployment Guide - Atabrinze API
+# 🚄 Railway Deployment Guide - AtaBronze API
 
 ## 🔗 **Deploy em 5 minutos no Railway**
 

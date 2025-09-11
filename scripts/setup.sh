@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# Setup script for Atabrinze API
+# Setup script for AtaBronze API
 
-echo "🚀 Setting up Atabrinze API..."
+echo "🚀 Setting up AtaBronze API..."
 
 # Check if Node.js is installed
 if ! command -v node &> /dev/null; then

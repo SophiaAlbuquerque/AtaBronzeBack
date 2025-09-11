@@ -1,7 +1,7 @@
 {
-  "name": "atabrinze-api",
+  "name": "atabronze-api",
   "version": "1.0.0",
-  "description": "Backend API para Atabrinze com integração a Bling, Correios e Asaas",
+  "description": "Backend API para AtaBronze com integração a Bling, Correios e Asaas",
   "main": "dist/index.js",
   "scripts": {
     "dev": "nodemon src/index.ts",
@@ -30,7 +30,7 @@
     "jwt",
     "api"
   ],
-  "author": "Atabrinze",
+  "author": "AtaBronze",
   "license": "MIT",
   "dependencies": {
     "@prisma/client": "^5.6.0",

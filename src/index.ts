@@ -26,7 +26,7 @@ app.use('/api', apiRoutes);
 // Welcome route
 app.get('/', (req, res) => {
   res.json({
-    message: 'Bem-vindo à Atabrinze API',
+    message: 'Bem-vindo à AtaBronze API',
     version: '1.0.0',
     docs: '/api/health',
   });
@@ -46,7 +46,7 @@ app.use(errorHandler);
 const PORT = config.port;
 
 app.listen(PORT, () => {
-  logger.info(`🚀 Atabrinze API running on port ${PORT}`);
+  logger.info(`🚀 AtaBronze API running on port ${PORT}`);
   logger.info(`🌍 Environment: ${config.nodeEnv}`);
   logger.info(`📚 Health check: http://localhost:${PORT}/api/health`);
 });

@@ -1,4 +1,4 @@
-# 🚀 Deployment Guide - Atabrinze API
+# 🚀 Deployment Guide - AtaBronze API
 
 ## 📋 Prerequisites
 

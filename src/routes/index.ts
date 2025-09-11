@@ -11,7 +11,7 @@ const router = Router();
 router.get('/health', (req, res) => {
   res.json({
     status: 'OK',
-    message: 'Atabrinze API is running',
+    message: 'AtaBronze API is running',
     timestamp: new Date().toISOString(),
   });
 });

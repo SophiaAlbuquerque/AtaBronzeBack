@@ -1,8 +1,8 @@
-# Atabrinze API
+# AtaBronze API
 
 [![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template/NvCE3W)
 
-Backend API para o sistema Atabrinze com integração a Bling, Correios e Asaas.
+Backend API para o sistema AtaBronze com integração a Bling, Correios e Asaas.
 
 ## ⚡ Deploy Rápido no Railway
 
@@ -61,7 +61,7 @@ Backend API para o sistema Atabrinze com integração a Bling, Correios e Asaas.
    ```env
    NODE_ENV=development
    PORT=3000
-   DATABASE_URL="postgresql://username:password@localhost:5432/atabrinze_db?schema=public"
+   DATABASE_URL="postgresql://username:password@localhost:5432/atabronze_db?schema=public"
    JWT_SECRET=your-super-secret-jwt-key-change-this-in-production
    JWT_EXPIRES_IN=7d
    
@@ -261,7 +261,7 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 
 ## 🆘 Suporte
 
-Para suporte, envie um email para suporte@atabrinze.com ou abra uma issue no repositório.
+Para suporte, envie um email para suporte@atabronze.com ou abra uma issue no repositório.
 
 ## 🗃️ Banco de Dados
 

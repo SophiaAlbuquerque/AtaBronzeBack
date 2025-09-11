@@ -1,9 +1,9 @@
 <!-- Use this file to provide workspace-specific custom instructions to Copilot. For more details, visit https://code.visualstudio.com/docs/copilot/copilot-customization#_use-a-githubcopilotinstructionsmd-file -->
 
-# Atabrinze API - Project Setup Complete ✅
+# AtaBronze API - Project Setup Complete ✅
 
 ## Project Overview
-This is a complete Node.js backend API for Atabrinze with the following features:
+This is a complete Node.js backend API for AtaBronze with the following features:
 
 ### ✅ Completed Features
 - [x] **Project Structure**: Complete layered architecture with controllers, services, and repositories

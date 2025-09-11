@@ -8,7 +8,7 @@ describe('API Health Check', () => {
       .expect(200);
 
     expect(response.body).toHaveProperty('status', 'OK');
-    expect(response.body).toHaveProperty('message', 'Atabrinze API is running');
+    expect(response.body).toHaveProperty('message', 'AtaBronze API is running');
     expect(response.body).toHaveProperty('timestamp');
   });
 
@@ -17,7 +17,7 @@ describe('API Health Check', () => {
       .get('/')
       .expect(200);
 
-    expect(response.body).toHaveProperty('message', 'Bem-vindo à Atabrinze API');
+    expect(response.body).toHaveProperty('message', 'Bem-vindo à AtaBronze API');
     expect(response.body).toHaveProperty('version', '1.0.0');
   });
 
