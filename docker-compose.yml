@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: atabrinze-postgres
+    environment:
+      POSTGRES_DB: atabrinze_db
+      POSTGRES_USER: atabrinze_user
+      POSTGRES_PASSWORD: atabrinze_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - atabrinze-network
+
+  # Atabrinze API
+  api:
+    build: .
+    container_name: atabrinze-api
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      DATABASE_URL: postgresql://atabrinze_user:atabrinze_password@postgres:5432/atabrinze_db?schema=public
+      JWT_SECRET: your-production-jwt-secret-key
+      JWT_EXPIRES_IN: 7d
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+    volumes:
+      - ./logs:/app/logs
+    networks:
+      - atabrinze-network
+    restart: unless-stopped
+
+  # Redis (for future caching/sessions)
+  redis:
+    image: redis:7-alpine
+    container_name: atabrinze-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - atabrinze-network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  atabrinze-network:
+    driver: bridge

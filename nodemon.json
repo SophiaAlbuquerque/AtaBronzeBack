@@ -1,0 +1,6 @@
+{
+  "name": "atabrinze-api",
+  "ts-node": {
+    "require": ["tsconfig-paths/register"]
+  }
+}

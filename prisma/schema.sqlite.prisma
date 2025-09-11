@@ -1,0 +1,121 @@
+// This is your Prisma schema file for SQLite (development)
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  name         String
+  email        String   @unique
+  password     String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  
+  // Relations
+  orders       Order[]
+  
+  @@map("users")
+}
+
+model Product {
+  id           String   @id @default(cuid())
+  name         String
+  description  String?
+  price        Float
+  stock        Int      @default(0)
+  sku          String   @unique
+  category     String?
+  weight       Float?   // in grams
+  length       Float?   // in cm
+  width        Float?   // in cm
+  height       Float?   // in cm
+  blingId      String?  // ID from Bling integration
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  
+  // Relations
+  orderItems   OrderItem[]
+  
+  @@map("products")
+}
+
+model Order {
+  id           String      @id @default(cuid())
+  userId       String
+  status       String      @default("pending") // pending, confirmed, shipped, delivered, cancelled
+  total        Float
+  shippingCost Float       @default(0)
+  paymentId    String?     // Asaas payment ID
+  shipmentId   String?     // Correios tracking ID
+  notes        String?
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  
+  // Relations
+  user         User        @relation(fields: [userId], references: [id])
+  items        OrderItem[]
+  payments     Payment[]
+  shipments    Shipment[]
+  
+  @@map("orders")
+}
+
+model OrderItem {
+  id        String   @id @default(cuid())
+  orderId   String
+  productId String
+  quantity  Int
+  price     Float    // price at the time of order
+  createdAt DateTime @default(now())
+  
+  // Relations
+  order     Order   @relation(fields: [orderId], references: [id])
+  product   Product @relation(fields: [productId], references: [id])
+  
+  @@map("order_items")
+}
+
+model Payment {
+  id            String   @id @default(cuid())
+  orderId       String
+  asaasId       String?  // Asaas payment ID
+  amount        Float
+  method        String   // credit_card, debit_card, pix, boleto
+  status        String   @default("pending") // pending, confirmed, failed, cancelled
+  dueDate       DateTime?
+  paymentUrl    String?
+  qrCode        String?  // for PIX payments
+  barCode       String?  // for boleto payments
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  // Relations
+  order         Order    @relation(fields: [orderId], references: [id])
+  
+  @@map("payments")
+}
+
+model Shipment {
+  id            String   @id @default(cuid())
+  orderId       String
+  trackingCode  String?
+  service       String   // PAC, SEDEX, etc.
+  cost          Float
+  estimatedDays Int?
+  status        String   @default("preparing") // preparing, shipped, in_transit, delivered
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  // Relations
+  order         Order    @relation(fields: [orderId], references: [id])
+  
+  @@map("shipments")
+}
