@@ -198,6 +198,52 @@ src/
 - Consulta de status de pagamentos
 - Suporte a PIX, boleto, cartão
 
+### Correios API (integração REAL!)
+- ✅ **Cálculo de frete real** usando `correios-brasil`
+- ✅ **Múltiplos serviços**: PAC, SEDEX, SEDEX 10, SEDEX 12
+- ✅ **Consulta real de CEPs** com validação
+- ✅ **Rastreamento real** de encomendas
+- ✅ **Sistema de fallback** para dados mock em caso de falha
+- ✅ **Não precisa de API Key** - usa APIs públicas dos Correios
+
+#### Exemplo de uso:
+```bash
+# Calcular frete real
+curl -X POST http://localhost:3001/api/shipping/calculate \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer SEU_TOKEN" \
+  -d '{
+    "originCep": "01310-100",
+    "destinationCep": "20040-020",
+    "weight": 1000,
+    "length": 20,
+    "width": 15,
+    "height": 10,
+    "value": 100
+  }'
+```
+
+**Resposta:**
+```json
+{
+  "message": "Cálculo de frete realizado com sucesso",
+  "calculations": [
+    {
+      "service": "PAC à vista",
+      "serviceCode": "04510",
+      "price": 15.50,
+      "deliveryTime": 7
+    },
+    {
+      "service": "SEDEX à vista", 
+      "serviceCode": "04014",
+      "price": 25.80,
+      "deliveryTime": 3
+    }
+  ]
+}
+```
+
 ### Correios API
 - Cálculo de frete
 - Rastreamento de encomendas

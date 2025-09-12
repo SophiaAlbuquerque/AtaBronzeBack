@@ -11,7 +11,7 @@ router.use(authenticateToken);
 
 router.post('/calculate', async (req, res) => {
   try {
-    const { originCep, destinationCep, weight, length, width, height } = req.body;
+    const { originCep, destinationCep, weight, length, width, height, value } = req.body;
 
     if (!originCep || !destinationCep || !weight || !length || !width || !height) {
       res.status(400).json({ 
@@ -27,11 +27,18 @@ router.post('/calculate', async (req, res) => {
       length,
       width,
       height,
+      value, // opcional
     });
 
     res.json({
       message: 'Cálculo de frete realizado com sucesso',
-      calculations,
+      calculations: calculations.map(calc => ({
+        service: calc.serviceName,
+        serviceCode: calc.service,
+        price: calc.price,
+        deliveryTime: calc.deliveryTime,
+        error: calc.error,
+      })),
     });
   } catch (error: any) {
     logger.error('Error calculating shipping', { error: error.message });
